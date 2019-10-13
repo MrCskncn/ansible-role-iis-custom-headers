@@ -1,0 +1,13 @@
+- name: Modify HTTP response headers
+  hosts: win
+  tasks:
+    - win_iis_website:
+        name: MySite
+        state: started
+        port: 80
+        ip: "{{ private_ip }}"
+        hostname: mysite.local
+        application_pool: DefaultAppPool
+        physical_path: C:\inetpub\mysite
+        parameters: logfile.directory:C:\inetpub\logs\mysite
+      register: mysite

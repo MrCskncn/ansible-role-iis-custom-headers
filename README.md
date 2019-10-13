@@ -22,6 +22,7 @@ Example Playbook
 
 The tasks rely on using Powershell's web server (IIS) administration cmdlets [Add-WebConfigurationProperty](https://technet.microsoft.com/en-us/library/ee790572.aspx) and [Remove-WebConfigurationProperty](https://technet.microsoft.com/en-us/library/ee790570.aspx).
 
+```
   - name: Modify HTTP response headers
     hosts: win
     roles:
@@ -34,6 +35,7 @@ The tasks rely on using Powershell's web server (IIS) administration cmdlets [Ad
           - { site: "MySite", name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
           - { site: "MySite", name: "X-Powered-By", value: "ASP.NET", state: "present" }
         iis_custom_headers_restart_iis: True
+```
 
 The result will add [customHeaders](https://www.iis.net/configreference/system.webserver/httpprotocol/customheaders) elements to the global XML configuration:
 

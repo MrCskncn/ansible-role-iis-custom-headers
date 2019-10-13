@@ -1,17 +1,17 @@
 - name: Create IIS site and modify HTTP response headers
   hosts: win
   tasks:
-  - name: Create a new application pool in 'Started' state
-    win_iis_website:
-      name: MySite
-      state: started
-      port: 80
-      ip: {{ private_ip }}
-      hostname: mysite.local
-      application_pool: DefaultAppPool
-      physical_path: C:\inetpub\mysite
-      parameters: logfile.directory:C:\inetpub\logs\mysite
-    register: win_iis_website
+    - name: Create a new application pool in 'Started' state
+      win_iis_website:
+        name: MySite
+        state: started
+        port: 80
+        ip: {{ private_ip }}
+        hostname: mysite.local
+        application_pool: DefaultAppPool
+        physical_path: C:\inetpub\mysite
+        parameters: logfile.directory:C:\inetpub\logs\mysite
+      register: win_iis_website
   
   roles:
     - include_role:

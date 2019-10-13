@@ -1,7 +1,7 @@
 IIS Custom Headers
 ==================
 
-Add or remove global, custom HTTP headers from IIS web sites on Microsoft Windows Server.
+Add or remove custom HTTP Response Headers to IIS web sites on Microsoft Windows Server. 
 
 Role Variables
 --------------
@@ -11,9 +11,9 @@ The `iis_custom_headers` default variable defines which key and value to set for
 By default, Ansible will restart IIS at the end of the tasks because it usually assumes the `win_shell` execution results in a change; toggle `iis_custom_headers_restart_iis` to prevent the IIS restart.
 
     iis_custom_headers:
-      - { name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
-      - { name: "X-Powered-By", value: "ASP", state: "absent" }
-      - { name: "X-Powered-By", value: "ASP.NET", state: "absent" }
+      - { site: "Default Web Site", name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
+      - { site: "Default Web Site", name: "X-Powered-By", value: "ASP", state: "absent" }
+      - { site: "Default Web Site", name: "X-Powered-By", value: "ASP.NET", state: "absent" }
 
     iis_custom_headers_restart_iis: True
 
@@ -22,13 +22,18 @@ Example Playbook
 
 The tasks rely on using Powershell's web server (IIS) administration cmdlets [Add-WebConfigurationProperty](https://technet.microsoft.com/en-us/library/ee790572.aspx) and [Remove-WebConfigurationProperty](https://technet.microsoft.com/en-us/library/ee790570.aspx).
 
-    - hosts: iis_servers
-      roles:
-         - role: deekayen.iis_custom_headers
-           iis_custom_headers:
-             - { name: "Strict-Transport-Security", value: "max-age=31536000", status: "present" }
-             - { name: "X-Frame-Options", value: "SAMEORIGIN", status: "present" }
-             - { name: "X-Powered-By", value: "ASP.NET", status: "absent" }
+  - name: Modify HTTP response headers
+    hosts: win
+    roles:
+      - name: iis-custom-headers
+        iis_custom_headers:
+          - { site: "Default Web Site", name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
+          - { site: "Default Web Site", name: "X-Powered-By", value: "ASP", state: "absent" }
+          - { site: "Default Web Site", name: "X-Powered-By", value: "ASP.NET", state: "absent" }
+          - { site: "MySite", name: "Strict-Transport-Security", value: "max-age=31536000", state: "present" }
+          - { site: "MySite", name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
+          - { site: "MySite", name: "X-Powered-By", value: "ASP.NET", state: "present" }
+        iis_custom_headers_restart_iis: True
 
 The result will add [customHeaders](https://www.iis.net/configreference/system.webserver/httpprotocol/customheaders) elements to the global XML configuration:
 
@@ -47,6 +52,7 @@ The result will add [customHeaders](https://www.iis.net/configreference/system.w
 Requirements
 ------------
 
+* Windows Server 2012 or 2012 R2 or 2016
 * IIS
 
 Dependencies

@@ -1,5 +1,4 @@
 ---
-
 - name: "Check existing global customHeaders."
   win_shell: "Get-WebConfigurationProperty \
   -pspath 'MACHINE/WEBROOT/APPHOST' \
@@ -7,10 +6,6 @@
   -name ."
   register: iis_custom_headers_properties
   changed_when: False
-
-- debug:
-    var: iis_custom_headers_properties
-    verbosity: 1
 
 - include: webconfigurationproperty.yml
   with_items:

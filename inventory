@@ -1,5 +1,5 @@
 [win]
-34.254.63.149
+34.254.63.149 private_ip=172.31.12.167
 
 [win:vars]
 ansible_user=Administrator

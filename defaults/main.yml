@@ -1,5 +1,4 @@
 ---
-
 iis_custom_headers:
   - { name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
   - { name: "X-Powered-By", value: "ASP", state: "absent" }

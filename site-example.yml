@@ -1,4 +1,4 @@
-- name: Modify HTTP response headers
+- name: Create a site to be headers added on
   hosts: win
   tasks:
     - win_iis_website:

@@ -1,0 +1,6 @@
+---
+iis_custom_headers:
+  - { site: "Default Web Site", name: "X-Frame-Options", value: "SAMEORIGIN", state: "present" }
+  - { site: "Default Web Site", name: "X-Powered-By", value: "ASP", state: "absent" }
+  - { site: "Default Web Site", name: "X-Powered-By", value: "ASP.NET", state: "absent" }
+iis_custom_headers_restart_iis: True
